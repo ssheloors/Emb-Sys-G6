@@ -16,6 +16,7 @@ typedef unsigned char byte;
 byte setBit(byte variable, int bitNumber);      // Check the Java doc for the function
 int getBit(byte variable, int bitNumber);       // Check the Java doc for the function
 void bin2hex(byte binaryNumber);                // Check the Java doc for the function
+int isDigit(char* string);                      // Check the Java doc for the function
 
 /**
  * The main method of the program.
@@ -25,6 +26,27 @@ void bin2hex(byte binaryNumber);                // Check the Java doc for the fu
  * @returns - a positive integer if an unexpected error occurs
 */
 int main(int argc, char* argv[]) {
+    // If the program has an invalid number of arguments, immediately print error message and exit the program.
+    if (argc != 6) {
+        // Print error message
+        printf("Invalid number of arguments. Program accepts 6 arguments.\n");
+        // Print format message
+        printf("Format: <executable-file> <engine_on> <gear_pos> <key_pos> <brakes1> <brakes2>");
+        // Exit program
+        return 0;
+    }
+
+    // Iterate through all the additional arguments (engine_on etc.)
+    for (int i=1; i<=5; i++) {
+        // If any additional argument is not a digit
+        if (!isDigit(argv[i])) {
+            // Print error message
+            printf("Invalid value found. Additional arguments besides executable can only be digits (0-9).");
+            // Exit program
+            return 0;
+        }
+    }
+
     // Declare a byte variable to store the binary value of the input. Initializes as 0
     byte output;
 
@@ -196,4 +218,29 @@ void bin2hex(byte binaryNumber) {
     }
     // Convert the decimal number to hexadecimal and print it
     printf("%x", number);
+}
+
+/**
+ * Checks if a given string is a digit (0-9)
+ * @param string value to be checked
+ * @returns - 1 if true (It is a number from 0 to 9)
+ * @returns - 0 if false (It is not a number from 0 to 9)
+*/
+int isDigit(char* string) {
+    // Iterate through all the characters in the string until the null character is encountered
+    for(int i=0; string[i] != '\0'; i++) {
+        // If the number in the string has more than one integer, it is not a digit
+        if (i > 0) {
+            // Return false
+            return 0;
+        }
+        // If the character is anything but a digit
+        if (string[i] < '0' || string[i] > '9') {
+            // Return false
+            return 0;
+        }
+    }
+
+    // Else, return true
+    return 1;
 }
