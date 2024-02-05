@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
         output = setBit(output, 7);
     }
     // If the value of engine_on is neither 1 nor 0
-    else if(argv[1][0] != 0) {
+    else if(argv[1][0] != '0') {
         // Print error message
         printf("Invalid engine state. Only 0 (off) or 1 (on).");
         // Exit program
@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) {
         output = setBit(output, 1);
     }
     // If the value of the front brake is neither 1 nor 0
-    else if(argv[4][0] != 0) {
+    else if(argv[4][0] != '0') {
         // Print error message
         printf("Invalid front brake postion. Only 0 or 1.");
         // Exit program
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
         output = setBit(output, 0);
     }
     // If the value of the rear brake is neither 1 nor 0
-    else if(argv[5][0] != 0) {
+    else if(argv[5][0] != '0') {
         // Print error message
         printf("Invalid rear brake postion. Only 0 or 1.");
         // Exit the program
