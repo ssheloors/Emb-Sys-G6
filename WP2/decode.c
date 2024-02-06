@@ -20,11 +20,11 @@ const char* hexValues[16] = {
 
 // Function declarations
 
-void hex2bin(char* string, char* output);               // Check the Java doc for the function
-int bin2dec(char* string, int low, int high);           // Check the Java doc for the function
-void updateTable(int values[], char* binaryString);     // Check the Java doc for the function
-void printTable(int values[]);                          // Check the Java doc for the function
-int isHexadecimal(char* string);                        // Check the Java doc for the function
+void hex2bin(char* string, char* output);               // Convert a hex string to a binary string
+int bin2dec(char* string, int low, int high);           // Convert a part (low to high) of a binary string to decimal
+void updateTable(int values[], char* binaryString);     // Updates the table of values
+void printTable(int values[]);                          // Prints the table of values
+int isHexadecimal(char* string);                        // Check if a string is a hexadecimal
 
 /**
  * The main method of the program.

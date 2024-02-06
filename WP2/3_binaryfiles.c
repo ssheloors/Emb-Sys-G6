@@ -5,10 +5,11 @@
  * Submission code: XXXXXX (provided by your TA-s)
  **/
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
+// Include section
+#include <stdlib.h>     // From template
+#include <stdio.h>      // For file functions, printf, scanf
+#include <string.h>     // For strcmp, strcpy
+#include <stdbool.h>    // For booleans
 // -----typedefs -------
 typedef struct
 {
@@ -50,9 +51,12 @@ PERSON createPerson();
 
 int main(void)
 {
+    // A variable for a person
     PERSON ppost;
+    // A variable for storing the menu option selected by the user
     int option;
 
+    // Continue loop as long as user does not input the exit code (5 in this case)
     while(option != 5){
         //print the menu to the user
         printf("1 Create a new and delete the old file \n");
@@ -66,27 +70,28 @@ int main(void)
         {
         case 1: //create a new file with dummy data
             write_new_file(&ppost); //call the function to create a new file
-            break;
+            break;  // end switch
         case 2: //add a new person to the file
             PERSON newPerson = createPerson(); //create a new person by calling a method that will prompt the user for data
             append_file(&newPerson); //add the created person to the file
-            break;  
+            break;  // end switch
         case 3: //search in the file
             char name[30]; //name to be found
 
             printf("Enter a name to be found - ");
             scanf("%s", &name); //scan the input
             search_by_firstname(name); //call the search function with the inputted value
-            break;
-        case 4:
-            printfile();
-            break; 
-        default:
-            break;
+            break;  // end switch
+        case 4: // print the entire file
+            printfile();    // print the entire file
+            break; // end switch
+        default:    // any other value
+            break; // end switch
         }
 
     }
 
+    // exit program
     return (0);
 }
 
@@ -96,6 +101,7 @@ void write_new_file(PERSON *inrecord){
     file = fopen("binaryfile.bin", "wb"); //create and open the file, name it and set it to write binary
     if(file==NULL){ //if the file is null after creation, return an error
         printf("Unable to create a new file \n");
+        // Return nothing
         return;
     }
 
@@ -108,6 +114,7 @@ void append_file(PERSON *inrecord){
     file = fopen("binaryfile.bin", "ab"); //open the file with that name in append binary mode
     if(file == NULL){ //if the file is null, prompt an error
         printf("Unable to open file, check if the file exists \n");
+        // Return nothing
         return;
     }
     fwrite(inrecord, sizeof(PERSON), 1, file); //write the record to the file
@@ -145,6 +152,7 @@ void search_by_firstname(char *name){
     FILE *file = fopen("binaryfile.bin", "rb"); //open file in read binary mode
     if(file == NULL){ //if the file was not open prompt an error
         printf("Unable to open the file.\n");
+        // Return nothing
         return;
     }
 
@@ -153,6 +161,7 @@ void search_by_firstname(char *name){
     if(ftell(file) == 0){ //use ftell to check your position in the file, if it is 0 you are still at the start meaning it is empty
         printf("The file is empty \n");
         fclose(file); //close the file
+        // return nothing
         return;
     }
     rewind(file); //reset the position in the file 
@@ -184,6 +193,7 @@ void printfile(void){
     if(ftell(file) == 0){ //use ftell to check your position in the file, if it is 0 you are still at the start meaning it is empty
         printf("The file is empty \n");
         fclose(file); //close the file
+        // return nothing
         return;
     }
     rewind(file); //reset the position in the file 

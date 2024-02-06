@@ -16,8 +16,11 @@
 // ##### typedefs ####
 // define a structure for the nodes of the linked list with a number as a value, a pointer to the next and previous nodes
 typedef struct q {
+    // The value of the node
     int number;
+    // Pointer to the next node in the list
     struct q* next;
+    // Pointer to the previous node in the list
     struct q* prev;
 } REGTYPE;
 
@@ -69,6 +72,7 @@ int main() {
         free(act_post);                  // free up the memory used by the post
     }
 
+    // Exit program
     return 0;
 }
 

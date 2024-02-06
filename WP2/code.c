@@ -13,10 +13,10 @@ typedef unsigned char byte;
 
 // Function declarations
 
-byte setBit(byte variable, int bitNumber);      // Check the Java doc for the function
-int getBit(byte variable, int bitNumber);       // Check the Java doc for the function
-void bin2hex(byte binaryNumber);                // Check the Java doc for the function
-int isDigit(char* string);                      // Check the Java doc for the function
+byte setBit(byte variable, int bitNumber);      // Set a given bit
+int getBit(byte variable, int bitNumber);       // Get a given bit
+void bin2hex(byte binaryNumber);                // Converts a binary number to hexadecimal
+int isDigit(char* string);                      // Check if a string is a digit
 
 /**
  * The main method of the program.
