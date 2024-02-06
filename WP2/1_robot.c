@@ -2,7 +2,7 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 2
  * Exercise 1
- * Submission code: XXXXXX (provided by your TA-s)
+ * Submission code: 665721 (provided by your TA-s)
  **/
 
 // Include statements
@@ -49,7 +49,6 @@ const char* getDirName(enum DIRECTION DIR);
 int main() {
     // variable declarations
     ROBOT robot;      // create a robot structure
-    char exit = ' ';  // create a variable to store the user input for exiting the program
     char input[100];  // create a variable to store the user input for the movement sequence
     int repeat = 1;   // if the user wants to repeat the program or not
 
