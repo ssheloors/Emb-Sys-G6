@@ -6,7 +6,7 @@
  */
 
 // Define variables
-#define DELAY 2000		// Set delay as 2000 milliseconds/2 seconds
+#define DELAY 500		// Set delay as 2000 milliseconds/2 seconds
 #define MAX_LIGHT 673	// 679 (max value) - 6 (min value)
 
 // Define components
@@ -46,13 +46,17 @@ void loop()
   // Get the temperature in Celcius
   // -0.5 for a margin of error, and *100 for decimal to int
   float tempC = (voltage - 0.5) * 100.0;
+  // Print the temperature in the serial
+  Serial.print("temperature: "); Serial.println(tempC);
   
   // Read light sensor data
   float lightData = analogRead(LIGHT);
   // Convert data to a percentage of light
   int lightPercent = (lightData * 100.0) / MAX_LIGHT;
   // Print the percentage of light to monitor
-  Serial.println(lightPercent);
+  Serial.print("lightPercent: "); Serial.println(lightPercent);
+  // Print empty line between outputs for readability
+  Serial.println();
   
   // If there is no light
   if (lightPercent == 0) {
