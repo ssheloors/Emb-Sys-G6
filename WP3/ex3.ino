@@ -3,7 +3,7 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 3
  * Exercise 3
- * Submission code: XXXXXX (provided by your TA-s)
+ * Submission code: 638180 (provided by your TA-s)
  **/
 
 byte ROW_1 = 13; //define the pin for the first row
