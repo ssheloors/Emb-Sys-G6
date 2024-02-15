@@ -6,9 +6,23 @@
  */
 
 // Define components
-#define RED_LED 8	// the red LED is connected to digital port 8
-#define YEL_LED 5	// the yellow LED is connected to port ???
-#define BTN 2		// the button is connected to port 2
+#define RED_LED 8	// the red LED is connected to digital pin 8
+#define YEL_LED 5	// the yellow LED is connected to pin 5
+#define BTN 2		// the button is connected to pin 2
+
+// Function to change the state of the LED
+void controlLED() {
+  // If the button is pressed
+  if (digitalRead(BTN) == HIGH) {
+    // Turn the LED on
+    digitalWrite(YEL_LED, HIGH);
+  }
+  // If the button is not pressed
+  else {
+    // Turn the LED off
+    digitalWrite(YEL_LED, LOW);
+  }
+}
 
 // Setup function that will run only once
 void setup()
@@ -33,14 +47,6 @@ void loop()
   // Wait for 1000 millisecond(s)/ 1 second
   delay(1000);
   
-  // If the button is pressed
-  if (digitalRead(BTN) == HIGH) {
-    // Turn the LED on
-    digitalWrite(YEL_LED, HIGH);
-  }
-  // If the button is not pressed
-  else {
-    // Turn the LED off
-    digitalWrite(YEL_LED, LOW);
-  }
+  // Interrupt for button press
+  attachInterrupt(digitalPinToInterrupt(BTN), controlLED, CHANGE);
 }
