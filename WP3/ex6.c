@@ -10,7 +10,7 @@
 #include <string.h>  // For strcpy
 
 // Define section
-#define MAX 20  // define the maximum size of the character input
+#define MAX 21  // define the maximum size of the character input, 20 characters + 1 for the null-terminator
 
 // Function declarations
 /**
@@ -29,15 +29,13 @@ int main() {
     char inputCopy[MAX];  // variable to store the copied string
 
     printf("Please enter a string: ");
-    scanf("%20s", input);  // read the user input and store it in the input variable
 
-    int c;  // helper variable to read the extra input characters and discard them
-    while ((c = getchar()) != '\n' && c != EOF)
-        ;  // loop through the extra input characters and discard them until a newline or EOF is reached
+    fgets(input, MAX, stdin);  // read the user input and store it in the input variable
 
     // copy the input string using the strcpy function, as specified in the exercise
     strcpy(inputCopy, input);
 
+    printf("\n");                                                  // print a newline for better readability
     printf("The copied string using strcpy is: %s\n", inputCopy);  // print the string the user entered
 
     // copy the input string using a custom function
