@@ -1,5 +1,10 @@
-// C++ code
-//
+/**
+ * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
+ * Work package 4
+ * Exercise 2
+ * Submission code: XXXXXX (provided by your TA-s)
+ **/
+
 // Based on the following tutorial: https://www.instructables.com/Arduino-Timer-Interrupts/
 #define DATA_RATE 9600// Define data rate for Serial
 
@@ -84,32 +89,32 @@ ISR(TIMER1_COMPA_vect) {
     digitalWrite(redLED, LOW);
 
   } else if (temperatureC < mediumTemp && temperatureC > lowTemp) { //less than 20 and more than 10 will be blue 
-    digitalWrite(whiteLED, LOW);
+    digitalWrite(whiteLED, HIGH);
     digitalWrite(blueLED, HIGH);
     digitalWrite(greenLED, LOW);
     digitalWrite(yellowLED, LOW);
     digitalWrite(redLED, LOW);
   }
   else if (temperatureC < highTemp && temperatureC > mediumTemp) { //less than 30 and more than 20 will be green
-    digitalWrite(whiteLED, LOW);
-    digitalWrite(blueLED, LOW);
+    digitalWrite(whiteLED, HIGH);
+    digitalWrite(blueLED, HIGH);
     digitalWrite(greenLED, HIGH);
     digitalWrite(yellowLED, LOW);
     digitalWrite(redLED, LOW);
   }
   else if (temperatureC > highTemp && temperatureC < veryHighTemp) {  //more than 30 and less than 60 will be yellow
-    digitalWrite(whiteLED, LOW);
-    digitalWrite(blueLED, LOW);
-    digitalWrite(greenLED, LOW);
+    digitalWrite(whiteLED, HIGH);
+    digitalWrite(blueLED, HIGH);
+    digitalWrite(greenLED, HIGH);
     digitalWrite(yellowLED, HIGH);
     digitalWrite(redLED, LOW);
   }
 
   else if (temperatureC > veryHighTemp) { //more than 60 will be red
-    digitalWrite(whiteLED, LOW);
-    digitalWrite(blueLED, LOW);
-    digitalWrite(greenLED, LOW);
-    digitalWrite(yellowLED, LOW);
+    digitalWrite(whiteLED, HIGH);
+    digitalWrite(blueLED, HIGH);
+    digitalWrite(greenLED, HIGH);
+    digitalWrite(yellowLED, HIGH);
     digitalWrite(redLED, HIGH);
   }
 
