@@ -1,8 +1,8 @@
 /**
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 4
- * Exercise 2
- * Submission code: XXXXXX (provided by your TA-s)
+ * Exercise 3
+ * Submission code: 134256 (provided by your TA-s)
  **/
 
 // Include library for Neopixel ring
@@ -95,21 +95,17 @@ ISR(TIMER1_COMPA_vect) {
   int nr_pixels = map(temperatureC, -40, 125, 1, 12);
   
   ring.clear(); // Clear previous colors
-  // Create a variable for green
-  uint32_t GREEN = ring.Color(0, 255, 0);
-  // Sets 3rd param amount of pixels starting from 2nd param to color 1st param
-  ring.fill(GREEN, 0, nr_pixels);
+  uint32_t GREEN = ring.Color(0, 255, 0); // Create a variable for green
+  ring.fill(GREEN, 0, nr_pixels); // Sets 3rd param amount of pixels starting from 2nd param to color 1st param
   ring.show();	// Show the set colors
   
   // if all pixels are lit up
   if (nr_pixels >= 12) {
-    // Light up the red LED
-    digitalWrite(redLED, HIGH);
+    digitalWrite(redLED, HIGH); // Light up the red LED
   }
   // if not all pixels are lit up
   else {
-    // Turn off the red LED
-    digitalWrite(redLED, LOW);
+    digitalWrite(redLED, LOW); // Turn off the red LED
   }
   
    sei();     //allow interrupts

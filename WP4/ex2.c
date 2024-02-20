@@ -2,7 +2,7 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 4
  * Exercise 2
- * Submission code: XXXXXX (provided by your TA-s)
+ * Submission code: 134256 (provided by your TA-s)
  **/
 
 // Include the library for the servo
@@ -28,11 +28,9 @@ int degrees = 1;
 // Runs only once
 void setup()
 {
-    // Equivalent to pinMode
-    servo.attach(SERVO);
-    // Set the initial degrees to 0
-    servo.write(0);
-    setup_timer_2();      // Setup timer
+    servo.attach(SERVO);   // Equivalent to pinMode
+    servo.write(0);        // Set the initial degrees to 0
+    setup_timer_2();       // Setup timer
     Serial.begin(15200);	// Begin serial
 }
 

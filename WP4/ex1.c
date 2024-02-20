@@ -1,10 +1,11 @@
 /**
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 4
- * Exercise 2
+ * Exercise 1
  * Submission code: XXXXXX (provided by your TA-s)
  **/
 
+//Timer interrupts code taken from course material
 // Based on the following tutorial: https://www.instructables.com/Arduino-Timer-Interrupts/
 #define DATA_RATE 9600// Define data rate for Serial
 
@@ -15,31 +16,35 @@
 #define TIMER1_MAX 65535    // Max counter value for timer1
 #define TIMER1_LOW 257      // Lowest counter value for timer1
 
-#define whiteLED 7
+//define ports for LEDs
+#define whiteLED 7 
 #define blueLED 6
 #define greenLED 5
 #define yellowLED 4
 #define redLED 3
 #define tempSensor A0
 
+//Set timer and counter to 0
 int timer1 = 0;
 int iCounter = 0;
 
 void setup()
-{
-  pinMode(whiteLED, OUTPUT);
+{ //set LEDs to output
+  pinMode(whiteLED, OUTPUT); 
   pinMode(blueLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
   pinMode(yellowLED, OUTPUT);
   pinMode(redLED, OUTPUT);
-  pinMode(tempSensor, INPUT);
+
+  
+  pinMode(tempSensor, INPUT); //set temperature sensor to input
   Serial.begin(DATA_RATE);// Begin serial
-  setup_timer_1();        // Setup timer
+  setup_timer_1();        // call setup timer function
 
 }
 
 void loop(){
-
+ //not used
 }
 
 void setup_timer_1() {
@@ -82,43 +87,43 @@ ISR(TIMER1_COMPA_vect) {
   int veryHighTemp = 60;
 
   if (temperatureC <= lowTemp) { //less or equal than 10 will be white
-    digitalWrite(whiteLED, HIGH);
-    digitalWrite(blueLED, LOW);
-    digitalWrite(greenLED, LOW);
-    digitalWrite(yellowLED, LOW);
-    digitalWrite(redLED, LOW);
+    digitalWrite(whiteLED, HIGH); //white on
+    digitalWrite(blueLED, LOW); //blue off
+    digitalWrite(greenLED, LOW); //green off
+    digitalWrite(yellowLED, LOW); //yellow off
+    digitalWrite(redLED, LOW); //red off
 
   } else if (temperatureC < mediumTemp && temperatureC > lowTemp) { //less than 20 and more than 10 will be blue 
-    digitalWrite(whiteLED, HIGH);
-    digitalWrite(blueLED, HIGH);
-    digitalWrite(greenLED, LOW);
-    digitalWrite(yellowLED, LOW);
-    digitalWrite(redLED, LOW);
+    digitalWrite(whiteLED, HIGH); //white on
+    digitalWrite(blueLED, HIGH); //blue on
+    digitalWrite(greenLED, LOW); //green off
+    digitalWrite(yellowLED, LOW); //green off
+    digitalWrite(redLED, LOW); //green off
   }
   else if (temperatureC < highTemp && temperatureC > mediumTemp) { //less than 30 and more than 20 will be green
-    digitalWrite(whiteLED, HIGH);
-    digitalWrite(blueLED, HIGH);
-    digitalWrite(greenLED, HIGH);
-    digitalWrite(yellowLED, LOW);
-    digitalWrite(redLED, LOW);
+    digitalWrite(whiteLED, HIGH); //white on  
+    digitalWrite(blueLED, HIGH); //blue on
+    digitalWrite(greenLED, HIGH); //green on 
+    digitalWrite(yellowLED, LOW); //yellow off
+    digitalWrite(redLED, LOW); //red off
   }
   else if (temperatureC > highTemp && temperatureC < veryHighTemp) {  //more than 30 and less than 60 will be yellow
-    digitalWrite(whiteLED, HIGH);
-    digitalWrite(blueLED, HIGH);
-    digitalWrite(greenLED, HIGH);
-    digitalWrite(yellowLED, HIGH);
-    digitalWrite(redLED, LOW);
+    digitalWrite(whiteLED, HIGH); //white on
+    digitalWrite(blueLED, HIGH); //blue on
+    digitalWrite(greenLED, HIGH); //green on
+    digitalWrite(yellowLED, HIGH); //yellow on
+    digitalWrite(redLED, LOW); //red off
   }
 
   else if (temperatureC > veryHighTemp) { //more than 60 will be red
-    digitalWrite(whiteLED, HIGH);
-    digitalWrite(blueLED, HIGH);
-    digitalWrite(greenLED, HIGH);
-    digitalWrite(yellowLED, HIGH);
-    digitalWrite(redLED, HIGH);
+    digitalWrite(whiteLED, HIGH); //white on
+    digitalWrite(blueLED, HIGH); //blue on
+    digitalWrite(greenLED, HIGH); //green on
+    digitalWrite(yellowLED, HIGH); //yellow on
+    digitalWrite(redLED, HIGH); //red on
   }
 
-  Serial.println((String) "Temperature: " + temperatureC + "C");
+  Serial.println((String) "Temperature: " + temperatureC + "C"); //print temperature to the serial
 
    sei();     //allow interrupts
 }
