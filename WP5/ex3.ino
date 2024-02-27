@@ -2,7 +2,7 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 5
  * Exercise 3
- * Submission code: XXXXX (provided by your TA-s)
+ * Submission code: 777181 (provided by your TA-s)
  */
 
 // Include section
@@ -10,12 +10,12 @@
 
 // Define variables
 #define DELAY 1000		// Set delay as 500 milliseconds/0.5 seconds
-#define MAX_LIGHT 1023	// Max voltage that can be received
+#define MAX_LIGHT 1023	// 679 (max value) - 6 (min value)
 
 // Define components
-#define RED_LED 6		// Set pin 6 for red LED
+#define RED_LED 6		// Set pin 2 for red LED
 #define YEL_LED 4		// Set pin 4 for yellow LED
-#define GRN_LED 2		// Set pin 2 for green LED
+#define GRN_LED 2		// Set pin 6 for green LED
 #define TEMP A0			// Set pin A0 for temperature sensor
 #define LIGHT A1		// Set pin A1 for light sensor
 
@@ -54,6 +54,7 @@ void loop()
   float lightData = analogRead(LIGHT);
   // Convert data to a percentage of light
   int lightPercent = (lightData * 100.0) / MAX_LIGHT;
+  // int lightPercent = lightData;
   // Print the percentage of light to monitor
   Serial.print("lightPercent: "); Serial.println(lightPercent);
   // Print empty line between outputs for readability
