@@ -1,3 +1,10 @@
+/*
+ * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
+ * Work package 6
+ * Exercise 2
+ * Submission code: XXXXXX (provided by your TA-s)
+ */
+
 // Define pins
 #define LED2 2     // Red LED
 #define LED3 3     // Orange LED
