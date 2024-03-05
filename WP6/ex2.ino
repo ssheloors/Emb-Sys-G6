@@ -2,17 +2,16 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 6
  * Exercise 2
- * Submission code: XXXXXX (provided by your TA-s)
+ * Submission code: 969308 (provided by your TA-s)
  */
 
 // Define pins
-#define LED2 2     // Red LED
-#define LED3 3     // Orange LED
-#define LED4 4     // Yellow LED
-#define LED5 5     // Green LED
-#define speaker 6  // Buzzer
-#define US_OUT 9   // Ultrasonic HC-SR04 Trig pin
-#define US_IN 11   // Ultrasonic HC-SR04 Echo pin
+#define LED2 2        // LED to pin 2
+#define LED3 3        // LED to pin 3
+#define LED4 4        // LED to pin 4
+#define LED5 5        // LED to pin 5
+#define speaker 6     // Buzzer
+#define ultrasonic 7  // Ultrasonic
 
 // Timer interrupt defines - Taken from course material
 // used in calculation: compare match register = [ clock speed/ (prescaler * interrupt frequency) ] - 1
@@ -30,27 +29,23 @@
 #define DELAY 10000  // 10.000 microseconds = 0.01 seconds
 
 // Define variables
-int distance;    // Distance in cm
+int distance;    // Distance variable to store the distance from the ultrasonic sensor
 int timer1 = 0;  // Initialize the timer we're using
 
 void setup() {
-    // put your setup code here, to run once:
-    pinMode(US_OUT, OUTPUT);   // Sets the trigPin as an OUTPUT
-    pinMode(US_IN, INPUT);     // Sets the echoPin as an INPUT
-    pinMode(LED2, OUTPUT);     // Sets the LED2 as an OUTPUT
-    pinMode(LED3, OUTPUT);     // Sets the LED3 as an OUTPUT
-    pinMode(LED4, OUTPUT);     // Sets the LED4 as an OUTPUT
-    pinMode(LED5, OUTPUT);     // Sets the LED5 as an OUTPUT
-    pinMode(speaker, OUTPUT);  // Sets the speaker as an OUTPUT
+    pinMode(LED2, OUTPUT);     // Set the LED pin 2 as output
+    pinMode(LED3, OUTPUT);     // Set the LED pin 3 as output
+    pinMode(LED4, OUTPUT);     // Set the LED pin 4 as output
+    pinMode(LED5, OUTPUT);     // Set the LED pin 5 as output
+    pinMode(speaker, OUTPUT);  // Set the speaker pin as output
 
     Serial.begin(9600);  // Start the serial communication
-    setup_timer_1();     // Setup timer 1
+    setup_timer_1();     // Set up the timer
 }
 
-void loop() { /* Empty, everything is done in the timer interrupt */
+void loop() {  // Empty loop, everything is done in the ISR
 }
 
-// Method for setting up timer1
 void setup_timer_1() {
     cli();  // stop interrupts
 
@@ -61,7 +56,6 @@ void setup_timer_1() {
     // calculate at which point to stop the counter and set to int:
     timer1 = (CLOCK_SPEED / (PRESCALER * INTERRUPT_FREQ)) - 1;
 
-    // Check if the timer1 value is within the allowed range
     if (timer1 >= TIMER1_MAX) {                                                            // if value went above max value
         timer1 = TIMER1_MAX;                                                               // set timer to max allowed value
         Serial.println((String) "timer1 was set too high and was changed to: " + timer1);  // notify user
@@ -82,67 +76,64 @@ void setup_timer_1() {
 ISR(TIMER1_COMPA_vect) {
     cli();  // stop interrupts
 
-    readDistance();                   // Logic for reading the distance
-    Serial.print("Distance (cm): ");  // Print the distance
-    Serial.println(distance);         // Print the distance
-    lightLEDs();                      // Logic for lighting the LEDs
-    soundSpeaker();                   // Logic for signing the speaker
+    readDistance();  // Call the function to read the distance
+    // Print the distance
+    Serial.print("Distance (cm): ");
+    Serial.println(distance);
+    lightLEDs();     // Call the function to light the LEDs according to the distance
+    soundSpeaker();  // Call the function to sound the speaker
 
     sei();  // allow interrupts
 }
-/**
- * Method for reading the distance
- * This method sends out a signal and reads the echo
- * to calculate the distance
- *
- * @return void
- **/
-void readDistance() {
-    digitalWrite(US_OUT, LOW);   // Clear the output pin for 2 microseconds
-    delayMicroseconds(2);        // delay for 2 microseconds
-    digitalWrite(US_OUT, HIGH);  // Send out a signal to check for echoes for 10 microseconds
-    delayMicroseconds(10);       // delay for 10 microseconds
-    digitalWrite(US_OUT, LOW);   // Stop signal
 
-    // Read for the echo
-    long duration = pulseIn(US_IN, HIGH);
+void readDistance() {
+    // The following steps follow the assignment description:
+    pinMode(ultrasonic, OUTPUT);     // Set Pin to Output
+    digitalWrite(ultrasonic, LOW);   // Write a zero to the output to clear the system
+    delayMicroseconds(2000);         // Wait 2 milliseconds
+    digitalWrite(ultrasonic, HIGH);  // Write a one to the output to send a ping
+    delayMicroseconds(10000);        // Wait 10 milliseconds
+    digitalWrite(ultrasonic, LOW);   // Write a zero to the output to stop sending the ping
+
+    pinMode(ultrasonic, INPUT);  // Set Pin to Input
+
+    // Listen to input if some echo returns
+    long duration = pulseIn(ultrasonic, HIGH);
     // Calculate distance
+    // The time until the echo returns is related to the distance of the object from which the ping reflected
     distance = microsecondsToCentimeters(duration);
 }
 
 /**
- * Method for converting microseconds to centimeters
+ * Function to convert microseconds to centimeters
  *
- * @param long microseconds
- * @return long
+ * @param microseconds - the time until the echo returns
+ * @return long, the distance of the object from which the ping reflected
  **/
 long microsecondsToCentimeters(long microseconds) {
     // The speed of sound is 340 m/s or 0.034 cm per microsecond.
-    // The ping travels out and back, so to find the distance of
-    // the object we take half of the distance traveled.
+    // The ping travels out and back, so to find the distance of the object we
+    // take half of the distance traveled.
     return (microseconds * 0.034) / 2;
 }
 
 /**
- * Method for sounding the speaker
- * This method sounds the speaker if the distance is below 200 cm
+ * Function to sound the speaker
  *
  * @return void
  **/
 void soundSpeaker() {
-    if (distance > 200) {             // If the distance is above 200 cm, mute the speaker
-        digitalWrite(speaker, HIGH);  // Mute the speaker, HIGH is off
-    } else {                          // If the distance is below 200 cm, sound the speaker
-        digitalWrite(speaker, LOW);   // Sound the speaker, LOW is on
-        delay(500);                   // Wait for 500 milliseconds
-        digitalWrite(speaker, HIGH);  // Mute the speaker, HIGH is off
-        delay(100);                   // Wait for 100 milliseconds
+    // Map the distance to the sound, the closer the object, the higher the sound
+    int sound = map(distance, 0, 200, 1000, 300);
+    if (distance > 200) {      // If the distance is greater than 200 cm, turn off the speaker
+        noTone(speaker);       // Turn off the speaker
+    } else {                   // If the distance is less than 200 cm, sound the speaker
+        tone(speaker, sound);  // Sound the speaker
     }
 }
 
 /**
- * Method for lighting the LEDs
- * This method lights the LEDs according to the distance
+ * Function to light the LEDs according to the distance
  *
  * @return void
  **/
@@ -188,11 +179,11 @@ void lightLEDs() {
         digitalWrite(LED3, HIGH);  // Turn on LED 3
         digitalWrite(LED4, HIGH);  // Turn on LED 4
         digitalWrite(LED5, HIGH);  // Turn on LED 5
-        delayMicroseconds(DELAY);  // Wait for 10.000 microseconds
+        delayMicroseconds(DELAY);  // Wait 0.01 seconds to allow the blinking
         digitalWrite(LED2, LOW);   // Turn off LED 2
         digitalWrite(LED3, LOW);   // Turn off LED 3
         digitalWrite(LED4, LOW);   // Turn off LED 4
         digitalWrite(LED5, LOW);   // Turn off LED 5
-        delayMicroseconds(DELAY);  // Wait for 10.000 microseconds
+        delayMicroseconds(DELAY);  // Wait 0.01 seconds
     }
 }

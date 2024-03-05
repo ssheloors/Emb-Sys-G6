@@ -2,7 +2,7 @@
  * (C) Vasilena Karaivanova, Teodora Portase, Marcelo Santibanez, group : 6 (2024)
  * Work package 6
  * Exercise 1
- * Submission code: XXXXXX (provided by your TA-s)
+ * Submission code: 969308 (provided by your TA-s)
  */
 
 // Define the pins
